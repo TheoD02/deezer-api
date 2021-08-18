@@ -13,6 +13,27 @@ class Editorial
     private string $picture_medium;
     private string $picture_big;
     private string $picture_xl;
+    private string $type;
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Editorial
+     */
+    public function setType(string $type): Editorial
+    {
+        $this->type = $type;
+        return $this;
+    }
+
 
     /**
      * @return int

@@ -10,28 +10,28 @@ use App\Types\SubTypes\Contributor;
 class Album
 {
     private int $id;
-    private string $title;
-    private string $upc;
-    private string $link;
-    private string $share;
-    private string $cover;
-    private string $cover_small;
-    private string $cover_medium;
-    private string $cover_big;
-    private string $cover_xl;
-    private string $md5_image;
+    private ?string $title;
+    private ?string $upc;
+    private ?string $link;
+    private ?string $share;
+    private ?string $cover;
+    private ?string $cover_small;
+    private ?string $cover_medium;
+    private ?string $cover_big;
+    private ?string $cover_xl;
+    private ?string $md5_image;
     private int $genre_id;
     private array $genres;
-    private string $label;
-    private int $nb_trakcs;
+    private ?string $label;
+    private int $nb_tracks;
     private int $duration;
     private int $fans;
     private int $rating;
     private ?\DateTime $release_date;
-    private string $record_type;
+    private ?string $record_type;
     private bool $available;
     private $alternative; // TODO : genre
-    private string $tracklist;
+    private ?string $tracklist;
     private bool $explicit_lyrics;
     private int $explicit_content_lyrics; // TODO : create object to handle number easily
     private int $explicit_content_cover; // TODO : same as before
@@ -39,6 +39,8 @@ class Album
     private Artist $artist;
     /** @var Track[] list of tracks */
     private array $tracks;
+    private ?string $type;
+    private int $position;
 
     /**
      * @return int
@@ -60,190 +62,190 @@ class Album
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param ?string $title
      *
      * @return Album
      */
-    public function setTitle(string $title): Album
+    public function setTitle(?string $title): Album
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getUpc(): string
+    public function getUpc(): ?string
     {
         return $this->upc;
     }
 
     /**
-     * @param string $upc
+     * @param ?string $upc
      *
      * @return Album
      */
-    public function setUpc(string $upc): Album
+    public function setUpc(?string $upc): Album
     {
         $this->upc = $upc;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
     /**
-     * @param string $link
+     * @param ?string $link
      *
      * @return Album
      */
-    public function setLink(string $link): Album
+    public function setLink(?string $link): Album
     {
         $this->link = $link;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getShare(): string
+    public function getShare(): ?string
     {
         return $this->share;
     }
 
     /**
-     * @param string $share
+     * @param ?string $share
      *
      * @return Album
      */
-    public function setShare(string $share): Album
+    public function setShare(?string $share): Album
     {
         $this->share = $share;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getCover(): string
+    public function getCover(): ?string
     {
         return $this->cover;
     }
 
     /**
-     * @param string $cover
+     * @param ?string $cover
      *
      * @return Album
      */
-    public function setCover(string $cover): Album
+    public function setCover(?string $cover): Album
     {
         $this->cover = $cover;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getCoverSmall(): string
+    public function getCoverSmall(): ?string
     {
         return $this->cover_small;
     }
 
     /**
-     * @param string $cover_small
+     * @param ?string $cover_small
      *
      * @return Album
      */
-    public function setCoverSmall(string $cover_small): Album
+    public function setCoverSmall(?string $cover_small): Album
     {
         $this->cover_small = $cover_small;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getCoverMedium(): string
+    public function getCoverMedium(): ?string
     {
         return $this->cover_medium;
     }
 
     /**
-     * @param string $cover_medium
+     * @param ?string $cover_medium
      *
      * @return Album
      */
-    public function setCoverMedium(string $cover_medium): Album
+    public function setCoverMedium(?string $cover_medium): Album
     {
         $this->cover_medium = $cover_medium;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getCoverBig(): string
+    public function getCoverBig(): ?string
     {
         return $this->cover_big;
     }
 
     /**
-     * @param string $cover_big
+     * @param ?string $cover_big
      *
      * @return Album
      */
-    public function setCoverBig(string $cover_big): Album
+    public function setCoverBig(?string $cover_big): Album
     {
         $this->cover_big = $cover_big;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getCoverXl(): string
+    public function getCoverXl(): ?string
     {
         return $this->cover_xl;
     }
 
     /**
-     * @param string $cover_xl
+     * @param ?string $cover_xl
      *
      * @return Album
      */
-    public function setCoverXl(string $cover_xl): Album
+    public function setCoverXl(?string $cover_xl): Album
     {
         $this->cover_xl = $cover_xl;
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getMd5Image(): string
+    public function getMd5Image(): ?string
     {
         return $this->md5_image;
     }
 
     /**
-     * @param string $md5_image
+     * @param ?string $md5_image
      *
      * @return Album
      */
-    public function setMd5Image(string $md5_image): Album
+    public function setMd5Image(?string $md5_image): Album
     {
         $this->md5_image = $md5_image;
         return $this;
@@ -288,19 +290,19 @@ class Album
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
     /**
-     * @param string $label
+     * @param ?string $label
      *
      * @return Album
      */
-    public function setLabel(string $label): Album
+    public function setLabel(?string $label): Album
     {
         $this->label = $label;
         return $this;
@@ -309,21 +311,22 @@ class Album
     /**
      * @return int
      */
-    public function getNbTrakcs(): int
+    public function getNbTracks(): int
     {
-        return $this->nb_trakcs;
+        return $this->nb_tracks;
     }
 
     /**
-     * @param int $nb_trakcs
+     * @param int $nb_tracks
      *
      * @return Album
      */
-    public function setNbTrakcs(int $nb_trakcs): Album
+    public function setNbTracks(int $nb_tracks): Album
     {
-        $this->nb_trakcs = $nb_trakcs;
+        $this->nb_tracks = $nb_tracks;
         return $this;
     }
+
 
     /**
      * @return int
@@ -391,31 +394,31 @@ class Album
     }
 
     /**
-     * @param string $release_date
+     * @param ?string $release_date
      *
      * @return Album
      * @throws \Exception
      */
-    public function setReleaseDate(string $release_date): Album
+    public function setReleaseDate(?string $release_date): Album
     {
         $this->release_date = new \DateTime($release_date);
         return $this;
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getRecordType(): string
+    public function getRecordType(): ?string
     {
         return $this->record_type;
     }
 
     /**
-     * @param string $record_type
+     * @param ?string $record_type
      *
      * @return Album
      */
-    public function setRecordType(string $record_type): Album
+    public function setRecordType(?string $record_type): Album
     {
         $this->record_type = $record_type;
         return $this;
@@ -460,19 +463,19 @@ class Album
     }
 
     /**
-     * @return string
+     * @return ?string
      */
-    public function getTracklist(): string
+    public function getTracklist(): ?string
     {
         return $this->tracklist;
     }
 
     /**
-     * @param string $tracklist
+     * @param ?string $tracklist
      *
      * @return Album
      */
-    public function setTracklist(string $tracklist): Album
+    public function setTracklist(?string $tracklist): Album
     {
         $this->tracklist = $tracklist;
         return $this;
@@ -591,4 +594,43 @@ class Album
         $this->tracks = Hydrator::hydrateArray($tracks, Track::class);
         return $this;
     }
+
+    /**
+     * @return ?string
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param ?string $type
+     *
+     * @return Album
+     */
+    public function setType(?string $type): Album
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     *
+     * @return Album
+     */
+    public function setPosition(int $position): Album
+    {
+        $this->position = $position;
+        return $this;
+    }
+
 }

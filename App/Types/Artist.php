@@ -18,7 +18,7 @@ class Artist
     private bool $radio;
     private string $tracklist;
     private string $type;
-
+    private int $position;
 
     /**
      * @return int
@@ -283,6 +283,25 @@ class Artist
     public function setType(string $type): Artist
     {
         $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     *
+     * @return Artist
+     */
+    public function setPosition(int $position): Artist
+    {
+        $this->position = $position;
         return $this;
     }
 }

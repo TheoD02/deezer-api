@@ -7,6 +7,7 @@ namespace App\Types;
 class Podcast
 {
     private int $id;
+    private string $name;
     private string $title;
     private string $description;
     private bool $available;
@@ -19,6 +20,45 @@ class Podcast
     private string $picture_medium;
     private string $picture_big;
     private string $picture_xl;
+    private string $type;
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Podcast
+     */
+    public function setName(string $name): Podcast
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Podcast
+     */
+    public function setType(string $type): Podcast
+    {
+        $this->type = $type;
+        return $this;
+    }
 
     /**
      * @return int

@@ -15,9 +15,29 @@ class Options
     private bool $too_many_devices;
     private bool $can_subscribe;
     private int $radio_skips;
-    private bool $is_lossless;
+    private bool $lossless;
     private bool $preview;
     private bool $radio;
+    private string $type;
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Options
+     */
+    public function setType(string $type): Options
+    {
+        $this->type = $type;
+        return $this;
+    }
 
     /**
      * @return bool
@@ -92,6 +112,25 @@ class Options
     public function setHq(bool $hq): Options
     {
         $this->hq = $hq;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLossless(): bool
+    {
+        return $this->lossless;
+    }
+
+    /**
+     * @param bool $lossless
+     *
+     * @return Options
+     */
+    public function setLossless(bool $lossless): Options
+    {
+        $this->lossless = $lossless;
         return $this;
     }
 
@@ -190,24 +229,6 @@ class Options
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isIsLossless(): bool
-    {
-        return $this->is_lossless;
-    }
-
-    /**
-     * @param bool $is_lossless
-     *
-     * @return Options
-     */
-    public function setIsLossless(bool $is_lossless): Options
-    {
-        $this->is_lossless = $is_lossless;
-        return $this;
-    }
 
     /**
      * @return bool

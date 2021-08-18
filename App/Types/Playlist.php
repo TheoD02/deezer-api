@@ -4,6 +4,9 @@
 namespace App\Types;
 
 
+use App\Hydrator;
+use App\Types\SubTypes\Creator;
+
 class Playlist
 {
     private int $id;
@@ -12,7 +15,7 @@ class Playlist
     private int $duration;
     private bool $public;
     private bool $is_loved_track;
-    private bool $is_collaborative;
+    private bool $collaborative;
     private int $rating;
     private int $nb_tracks;
     private int $unseen_track_count;
@@ -25,9 +28,132 @@ class Playlist
     private string $picture_big;
     private string $picture_xl;
     private string $checksum;
+    private string $tracklist;
     private User $user;
     /** @var Track[] */
     private array $tracks;
+    private string $creation_date;
+    private string $md5_image;
+    private string $picture_type;
+    private string $type;
+    private Creator $creator;
+
+    /**
+     * @return array
+     */
+    public function getCreator(): array
+    {
+        return $this->creator;
+    }
+
+    /**
+     * @param array $creator
+     *
+     * @return Playlist
+     */
+    public function setCreator(array $creator): Playlist
+    {
+        $this->creator = Hydrator::hydrate($creator, Creator::class);
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Playlist
+     */
+    public function setType(string $type): Playlist
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPictureType(): string
+    {
+        return $this->picture_type;
+    }
+
+    /**
+     * @param string $picture_type
+     *
+     * @return Playlist
+     */
+    public function setPictureType(string $picture_type): Playlist
+    {
+        $this->picture_type = $picture_type;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMd5Image(): string
+    {
+        return $this->md5_image;
+    }
+
+    /**
+     * @param string $md5_image
+     *
+     * @return Playlist
+     */
+    public function setMd5Image(string $md5_image): Playlist
+    {
+        $this->md5_image = $md5_image;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreationDate(): string
+    {
+        return $this->creation_date;
+    }
+
+    /**
+     * @param string $creation_date
+     *
+     * @return Playlist
+     */
+    public function setCreationDate(string $creation_date): Playlist
+    {
+        $this->creation_date = $creation_date;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getTracklist(): string
+    {
+        return $this->tracklist;
+    }
+
+    /**
+     * @param string $tracklist
+     *
+     * @return Playlist
+     */
+    public function setTracklist(string $tracklist): Playlist
+    {
+        $this->tracklist = $tracklist;
+        return $this;
+    }
+
 
     /**
      * @return int
@@ -146,21 +272,22 @@ class Playlist
     /**
      * @return bool
      */
-    public function isIsCollaborative(): bool
+    public function isCollaborative(): bool
     {
-        return $this->is_collaborative;
+        return $this->collaborative;
     }
 
     /**
-     * @param bool $is_collaborative
+     * @param bool $collaborative
      *
      * @return Playlist
      */
-    public function setIsCollaborative(bool $is_collaborative): Playlist
+    public function setCollaborative(bool $collaborative): Playlist
     {
-        $this->is_collaborative = $is_collaborative;
+        $this->collaborative = $collaborative;
         return $this;
     }
+
 
     /**
      * @return int
@@ -399,13 +526,13 @@ class Playlist
     }
 
     /**
-     * @param User $user
+     * @param array $user
      *
      * @return Playlist
      */
-    public function setUser(User $user): Playlist
+    public function setUser(array $user): Playlist
     {
-        $this->user = $user;
+        $this->user = Hydrator::hydrate($user, User::class);
         return $this;
     }
 
@@ -424,7 +551,7 @@ class Playlist
      */
     public function setTracks(array $tracks): Playlist
     {
-        $this->tracks = $tracks;
+        $this->tracks = Hydrator::hydrateArray($tracks, Track::class);
         return $this;
     }
 }

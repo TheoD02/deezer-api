@@ -27,6 +27,26 @@ class User
     private string $explicit_content_level;
     private array $explicit_content_levels_available;
     private string $tracklist;
+    private string $type;
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return User
+     */
+    public function setType(string $type): User
+    {
+        $this->type = $type;
+        return $this;
+    }
 
     /**
      * @return int

@@ -4,6 +4,8 @@
 namespace App\Types;
 
 
+use App\Hydrator;
+
 class Chart
 {
     /** @var Track[] */
@@ -32,7 +34,7 @@ class Chart
      */
     public function setTracks(array $tracks): Chart
     {
-        $this->tracks = $tracks;
+        $this->tracks = Hydrator::hydrateArray($tracks, Track::class);
         return $this;
     }
 
@@ -51,7 +53,7 @@ class Chart
      */
     public function setAlbums(array $albums): Chart
     {
-        $this->albums = $albums;
+        $this->albums = Hydrator::hydrateArray($albums, Album::class);
         return $this;
     }
 
@@ -70,7 +72,7 @@ class Chart
      */
     public function setArtists(array $artists): Chart
     {
-        $this->artists = $artists;
+        $this->artists = Hydrator::hydrateArray($artists, Artist::class);
         return $this;
     }
 
@@ -89,7 +91,7 @@ class Chart
      */
     public function setPlaylists(array $playlists): Chart
     {
-        $this->playlists = $playlists;
+        $this->playlists = Hydrator::hydrateArray($playlists, Playlist::class);
         return $this;
     }
 
@@ -108,7 +110,7 @@ class Chart
      */
     public function setPodcasts(array $podcasts): Chart
     {
-        $this->podcasts = $podcasts;
+        $this->podcasts = Hydrator::hydrateArray($podcasts, Podcast::class);
         return $this;
     }
 }
