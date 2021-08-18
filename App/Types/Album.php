@@ -27,7 +27,7 @@ class Album
     private int $duration;
     private int $fans;
     private int $rating;
-    private string $datetime;
+    private ?\DateTime $release_date;
     private string $record_type;
     private bool $available;
     private $alternative; // TODO : genre
@@ -283,7 +283,7 @@ class Album
      */
     public function setGenres(array $genres): Album
     {
-        $this->genres = $genres;
+        $this->genres = Hydrator::hydrateArray($genres, Genre::class);
         return $this;
     }
 
@@ -383,21 +383,22 @@ class Album
     }
 
     /**
-     * @return string
+     * @return ?\DateTime
      */
-    public function getDatetime(): string
+    public function getReleaseDate(): ?\DateTime
     {
-        return $this->datetime;
+        return $this->release_date;
     }
 
     /**
-     * @param string $datetime
+     * @param string $release_date
      *
      * @return Album
+     * @throws \Exception
      */
-    public function setDatetime(string $datetime): Album
+    public function setReleaseDate(string $release_date): Album
     {
-        $this->datetime = $datetime;
+        $this->release_date = new \DateTime($release_date);
         return $this;
     }
 
@@ -549,12 +550,7 @@ class Album
      */
     public function setContributors(array $contributors): Album
     {
-        $contributorsObj = [];
-        foreach ($contributors as $contributor)
-        {
-            $contributorsObj[] = Hydrator::hydrate($contributor, Contributor::class);
-        }
-        $this->contributors = $contributorsObj;
+        $this->contributors = Hydrator::hydrateArray($contributors, Contributor::class);
         return $this;
     }
 
@@ -573,8 +569,7 @@ class Album
      */
     public function setArtist(array $artist): Album
     {
-        $artist = Hydrator::hydrate($artist, Artist::class);
-        $this->artist = $artist;
+        $this->artist = Hydrator::hydrate($artist, Artist::class);
         return $this;
     }
 
@@ -593,12 +588,7 @@ class Album
      */
     public function setTracks(array $tracks): Album
     {
-        $tracksObj = [];
-        foreach ($tracks['data'] as $track)
-        {
-            $tracksObj[] = Hydrator::hydrate($track, Track::class);
-        }
-        $this->tracks = $tracksObj;
+        $this->tracks = Hydrator::hydrateArray($tracks, Track::class);
         return $this;
     }
 }
