@@ -1,0 +1,21 @@
+{
+    "name": "theo/deezer-helper",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "theod02",
+            "email": "theo.d02290@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.3",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^5.3"
+    }
+}
