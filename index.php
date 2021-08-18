@@ -12,5 +12,5 @@ $deezerApi = new DeezerApi();
 /*$deezerApi->setPermissions(DeezerApi::ALL_ACCESS);
 echo $deezerApi->generateAuthentificationUrl();*/
 
-$artist = $deezerApi->getInfos();
-dd($artist->getAds()->getBigNativeAdsHome()->getAndroid()->isEnabled());
+$artist = $deezerApi->getAlbumById(302127);
+dd($artist);

@@ -6,10 +6,11 @@ namespace App\Types;
 
 use App\Hydrator;
 use App\Types\SubTypes\Contributor;
+use App\Types\SubTypes\ExplicitContentLyrics;
 
 class Album
 {
-    private int $id;
+    private ?int $id;
     private ?string $title;
     private ?string $upc;
     private ?string $link;
@@ -20,49 +21,49 @@ class Album
     private ?string $cover_big;
     private ?string $cover_xl;
     private ?string $md5_image;
-    private int $genre_id;
-    private array $genres;
+    private ?int $genre_id;
+    private ?array $genres;
     private ?string $label;
-    private int $nb_tracks;
-    private int $duration;
-    private int $fans;
-    private int $rating;
+    private ?int $nb_tracks;
+    private ?int $duration;
+    private ?int $fans;
+    private ?int $rating;
     private ?\DateTime $release_date;
     private ?string $record_type;
-    private bool $available;
-    private $alternative; // TODO : genre
+    private ?bool $available;
+    private ?Genre $alternative; // TODO : genre
     private ?string $tracklist;
     private bool $explicit_lyrics;
-    private int $explicit_content_lyrics; // TODO : create object to handle number easily
-    private int $explicit_content_cover; // TODO : same as before
-    private array $contributors;
-    private Artist $artist;
+    private ?string $explicit_content_lyrics; // TODO : create object to handle number easily
+    private ?string $explicit_content_cover; // TODO : same as before
+    private ?array $contributors;
+    private ?Artist $artist;
     /** @var Track[] list of tracks */
-    private array $tracks;
+    private ?array $tracks;
     private ?string $type;
-    private int $position;
+    private ?int $position;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return Album
      */
-    public function setId(int $id): Album
+    public function setId(?int $id): Album
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getTitle(): ?string
     {
@@ -70,7 +71,7 @@ class Album
     }
 
     /**
-     * @param ?string $title
+     * @param string|null $title
      *
      * @return Album
      */
@@ -81,7 +82,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getUpc(): ?string
     {
@@ -89,7 +90,7 @@ class Album
     }
 
     /**
-     * @param ?string $upc
+     * @param string|null $upc
      *
      * @return Album
      */
@@ -100,7 +101,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getLink(): ?string
     {
@@ -108,7 +109,7 @@ class Album
     }
 
     /**
-     * @param ?string $link
+     * @param string|null $link
      *
      * @return Album
      */
@@ -119,7 +120,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getShare(): ?string
     {
@@ -127,7 +128,7 @@ class Album
     }
 
     /**
-     * @param ?string $share
+     * @param string|null $share
      *
      * @return Album
      */
@@ -138,7 +139,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getCover(): ?string
     {
@@ -146,7 +147,7 @@ class Album
     }
 
     /**
-     * @param ?string $cover
+     * @param string|null $cover
      *
      * @return Album
      */
@@ -157,7 +158,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getCoverSmall(): ?string
     {
@@ -165,7 +166,7 @@ class Album
     }
 
     /**
-     * @param ?string $cover_small
+     * @param string|null $cover_small
      *
      * @return Album
      */
@@ -176,7 +177,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getCoverMedium(): ?string
     {
@@ -184,7 +185,7 @@ class Album
     }
 
     /**
-     * @param ?string $cover_medium
+     * @param string|null $cover_medium
      *
      * @return Album
      */
@@ -195,7 +196,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getCoverBig(): ?string
     {
@@ -203,7 +204,7 @@ class Album
     }
 
     /**
-     * @param ?string $cover_big
+     * @param string|null $cover_big
      *
      * @return Album
      */
@@ -214,7 +215,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getCoverXl(): ?string
     {
@@ -222,7 +223,7 @@ class Album
     }
 
     /**
-     * @param ?string $cover_xl
+     * @param string|null $cover_xl
      *
      * @return Album
      */
@@ -233,7 +234,7 @@ class Album
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getMd5Image(): ?string
     {
@@ -241,7 +242,7 @@ class Album
     }
 
     /**
-     * @param ?string $md5_image
+     * @param string|null $md5_image
      *
      * @return Album
      */
@@ -252,45 +253,45 @@ class Album
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getGenreId(): int
+    public function getGenreId(): ?int
     {
         return $this->genre_id;
     }
 
     /**
-     * @param int $genre_id
+     * @param int|null $genre_id
      *
      * @return Album
      */
-    public function setGenreId(int $genre_id): Album
+    public function setGenreId(?int $genre_id): Album
     {
         $this->genre_id = $genre_id;
         return $this;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getGenres(): array
+    public function getGenres(): ?array
     {
         return $this->genres;
     }
 
     /**
-     * @param array $genres
+     * @param array|null $genres
      *
      * @return Album
      */
-    public function setGenres(array $genres): Album
+    public function setGenres(?array $genres): Album
     {
         $this->genres = Hydrator::hydrateArray($genres, Genre::class);
         return $this;
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getLabel(): ?string
     {
@@ -298,7 +299,7 @@ class Album
     }
 
     /**
-     * @param ?string $label
+     * @param string|null $label
      *
      * @return Album
      */
@@ -309,84 +310,83 @@ class Album
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getNbTracks(): int
+    public function getNbTracks(): ?int
     {
         return $this->nb_tracks;
     }
 
     /**
-     * @param int $nb_tracks
+     * @param int|null $nb_tracks
      *
      * @return Album
      */
-    public function setNbTracks(int $nb_tracks): Album
+    public function setNbTracks(?int $nb_tracks): Album
     {
         $this->nb_tracks = $nb_tracks;
         return $this;
     }
 
-
     /**
-     * @return int
+     * @return int|null
      */
-    public function getDuration(): int
+    public function getDuration(): ?int
     {
         return $this->duration;
     }
 
     /**
-     * @param int $duration
+     * @param int|null $duration
      *
      * @return Album
      */
-    public function setDuration(int $duration): Album
+    public function setDuration(?int $duration): Album
     {
         $this->duration = $duration;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getFans(): int
+    public function getFans(): ?int
     {
         return $this->fans;
     }
 
     /**
-     * @param int $fans
+     * @param int|null $fans
      *
      * @return Album
      */
-    public function setFans(int $fans): Album
+    public function setFans(?int $fans): Album
     {
         $this->fans = $fans;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getRating(): int
+    public function getRating(): ?int
     {
         return $this->rating;
     }
 
     /**
-     * @param int $rating
+     * @param int|null $rating
      *
      * @return Album
      */
-    public function setRating(int $rating): Album
+    public function setRating(?int $rating): Album
     {
         $this->rating = $rating;
         return $this;
     }
 
     /**
-     * @return ?\DateTime
+     * @return \DateTime|null
      */
     public function getReleaseDate(): ?\DateTime
     {
@@ -394,19 +394,18 @@ class Album
     }
 
     /**
-     * @param ?string $release_date
+     * @param string|null $release_date
      *
      * @return Album
-     * @throws \Exception
      */
-    public function setReleaseDate(?string $release_date): Album
+    public function setReleaseDate(string $release_date): Album
     {
         $this->release_date = new \DateTime($release_date);
         return $this;
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getRecordType(): ?string
     {
@@ -414,7 +413,7 @@ class Album
     }
 
     /**
-     * @param ?string $record_type
+     * @param string|null $record_type
      *
      * @return Album
      */
@@ -425,45 +424,45 @@ class Album
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isAvailable(): bool
+    public function getAvailable(): ?bool
     {
         return $this->available;
     }
 
     /**
-     * @param bool $available
+     * @param bool|null $available
      *
      * @return Album
      */
-    public function setAvailable(bool $available): Album
+    public function setAvailable(?bool $available): Album
     {
         $this->available = $available;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return Genre|null
      */
-    public function getAlternative()
+    public function getAlternative(): ?Genre
     {
         return $this->alternative;
     }
 
     /**
-     * @param mixed $alternative
+     * @param Genre|null $alternative
      *
      * @return Album
      */
-    public function setAlternative($alternative)
+    public function setAlternative(?Genre $alternative): Album
     {
         $this->alternative = $alternative;
         return $this;
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getTracklist(): ?string
     {
@@ -471,7 +470,7 @@ class Album
     }
 
     /**
-     * @param ?string $tracklist
+     * @param string|null $tracklist
      *
      * @return Album
      */
@@ -501,72 +500,72 @@ class Album
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getExplicitContentLyrics(): int
+    public function getExplicitContentLyrics(): ?int
     {
         return $this->explicit_content_lyrics;
     }
 
     /**
-     * @param int $explicit_content_lyrics
+     * @param int|null $explicit_content_lyrics
      *
      * @return Album
      */
-    public function setExplicitContentLyrics(int $explicit_content_lyrics): Album
+    public function setExplicitContentLyrics(?int $explicit_content_lyrics): Album
     {
-        $this->explicit_content_lyrics = $explicit_content_lyrics;
+        $this->explicit_content_lyrics = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_lyrics);
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getExplicitContentCover(): int
+    public function getExplicitContentCover(): ?int
     {
         return $this->explicit_content_cover;
     }
 
     /**
-     * @param int $explicit_content_cover
+     * @param int|null $explicit_content_cover
      *
      * @return Album
      */
-    public function setExplicitContentCover(int $explicit_content_cover): Album
+    public function setExplicitContentCover(?int $explicit_content_cover): Album
     {
-        $this->explicit_content_cover = $explicit_content_cover;
+        $this->explicit_content_cover = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_cover);
         return $this;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getContributors(): array
+    public function getContributors(): ?array
     {
         return $this->contributors;
     }
 
     /**
-     * @param array $contributors
+     * @param array|null $contributors
      *
      * @return Album
      */
-    public function setContributors(array $contributors): Album
+    public function setContributors(?array $contributors): Album
     {
         $this->contributors = Hydrator::hydrateArray($contributors, Contributor::class);
         return $this;
     }
 
     /**
-     * @return Artist
+     * @return Artist|null
      */
-    public function getArtist(): Artist
+    public function getArtist(): ?Artist
     {
         return $this->artist;
     }
 
     /**
-     * @param array $artist
+     * @param array|null $artist
      *
      * @return Album
      */
@@ -579,7 +578,7 @@ class Album
     /**
      * @return Track[]
      */
-    public function getTracks(): array
+    public function getTracks(): ?array
     {
         return $this->tracks;
     }
@@ -589,14 +588,14 @@ class Album
      *
      * @return Album
      */
-    public function setTracks(array $tracks): Album
+    public function setTracks(?array $tracks): Album
     {
         $this->tracks = Hydrator::hydrateArray($tracks, Track::class);
         return $this;
     }
 
     /**
-     * @return ?string
+     * @return string|null
      */
     public function getType(): ?string
     {
@@ -604,7 +603,7 @@ class Album
     }
 
     /**
-     * @param ?string $type
+     * @param string|null $type
      *
      * @return Album
      */
@@ -615,22 +614,21 @@ class Album
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
     /**
-     * @param int $position
+     * @param int|null $position
      *
      * @return Album
      */
-    public function setPosition(int $position): Album
+    public function setPosition(?int $position): Album
     {
         $this->position = $position;
         return $this;
     }
-
 }
