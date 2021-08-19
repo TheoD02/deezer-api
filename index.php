@@ -11,6 +11,12 @@ $deezerApi = new DeezerApi();
 
 /*$deezerApi->setPermissions(DeezerApi::ALL_ACCESS);
 echo $deezerApi->generateAuthentificationUrl();*/
-
-$artist = $deezerApi->getTrackById("?q=eminem");
-dd($artist);
+$start_time = microtime(true);
+$res        = [];
+for ($i = 0; $i < 500; $i++)
+{
+    $res[] = ['date' => (new DateTime())->format('H:i:s'), 'infos' => $deezerApi->getInfos()];
+}
+$end_time = microtime(true);
+$diff     = $end_time - $start_time;
+echo 'Exec in ' . $diff;

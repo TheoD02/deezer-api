@@ -49,6 +49,43 @@ class DeezerApi
     private string $appAuthentificationUrl = "https://connect.deezer.com/oauth/auth.php?app_id=YOUR_APP_ID&redirect_uri=YOUR_REDIRECT_URI&perms=PERMS";
     private bool $isLogged = false;
 
+
+    private const MAX_REQUEST_PER_SECOND = 49;
+    private static ?\DateTime $last_reset_datetime = null;
+    private static ?\DateTime $current_date_time = null;
+    static int $nb_requested = 0;
+
+    private static function handleRequestTime()
+    {
+        self::$nb_requested++;
+        self::$current_date_time = new \DateTime();
+        if (self::$last_reset_datetime === null)
+        {
+            self::$last_reset_datetime = new \DateTime();
+        }
+
+        $diffWithLastReset = self::$current_date_time->diff(self::$last_reset_datetime);
+        /*
+         $isOverSec         = $diffWithLastReset->s >= 4;
+
+        if ($isOverSec && self::$nb_requested >= self::MAX_REQUEST_PER_SECOND)
+        {
+            echo 'await 1' . PHP_EOL;
+            usleep(1500 * 1000);
+            self::$last_reset_datetime = new \DateTime();
+            self::$nb_requested        = 0;
+        }
+        */
+        if (self::$nb_requested >= self::MAX_REQUEST_PER_SECOND && $diffWithLastReset->s <= 5)
+        {
+            $awaitTime = 5 - $diffWithLastReset->s;
+            $awaitTime = $awaitTime <= 0 ? 1 : $awaitTime;
+            sleep($awaitTime);
+            self::$last_reset_datetime = new \DateTime();
+            self::$nb_requested        = 0;
+        }
+    }
+
     public function __construct()
     {
 
@@ -126,8 +163,9 @@ class DeezerApi
      * @throws \JsonException
      * @throws \Exception
      */
-    private function callApi($endpoint)
+    private static function callApi($endpoint)
     {
+        self::handleRequestTime();
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, self::API_BASE_URL . $endpoint);
         curl_setopt($ch, CURLOPT_HEADER, true);
@@ -155,7 +193,7 @@ class DeezerApi
      */
     public function getAlbumById($id): Album
     {
-        return Hydrator::hydrate($this->callApi("/album/$id"), Album::class);
+        return Hydrator::hydrate(self::callApi("/album/$id"), Album::class);
     }
 
     /**
@@ -163,7 +201,7 @@ class DeezerApi
      */
     public function getArtistById($id): Artist
     {
-        return Hydrator::hydrate($this->callApi("/artist/$id"), Artist::class);
+        return Hydrator::hydrate(self::callApi("/artist/$id"), Artist::class);
     }
 
     /**
@@ -171,7 +209,7 @@ class DeezerApi
      */
     public function getChart(): Chart
     {
-        return Hydrator::hydrate($this->callApi("/chart"), Chart::class);
+        return Hydrator::hydrate(self::callApi("/chart"), Chart::class);
     }
 
     /**
@@ -179,7 +217,7 @@ class DeezerApi
      */
     public function getEditorialById($id): Editorial
     {
-        return Hydrator::hydrate($this->callApi("/editorial/$id"), Editorial::class);
+        return Hydrator::hydrate(self::callApi("/editorial/$id"), Editorial::class);
     }
 
     /**
@@ -188,7 +226,7 @@ class DeezerApi
      */
     public function getAllEditorial(): array
     {
-        return Hydrator::hydrateArray($this->callApi('/editorial'), Editorial::class);
+        return Hydrator::hydrateArray(self::callApi('/editorial'), Editorial::class);
     }
 
     /**
@@ -196,7 +234,7 @@ class DeezerApi
      */
     public function getEpisodeById($id): Episode
     {
-        return Hydrator::hydrate($this->callApi("/episode/$id"), Episode::class);
+        return Hydrator::hydrate(self::callApi("/episode/$id"), Episode::class);
     }
 
     /**
@@ -204,7 +242,7 @@ class DeezerApi
      */
     public function getGenreById($id): Genre
     {
-        return Hydrator::hydrate($this->callApi("/genre/$id"), Genre::class);
+        return Hydrator::hydrate(self::callApi("/genre/$id"), Genre::class);
     }
 
     /**
@@ -212,7 +250,7 @@ class DeezerApi
      */
     public function getAllGenres(): array
     {
-        return Hydrator::hydrateArray($this->callApi("/genre"), Genre::class);
+        return Hydrator::hydrateArray(self::callApi("/genre"), Genre::class);
     }
 
     /**
@@ -220,7 +258,7 @@ class DeezerApi
      */
     public function getInfos(): Infos
     {
-        return Hydrator::hydrate($this->callApi("/infos"), Infos::class);
+        return Hydrator::hydrate(self::callApi("/infos"), Infos::class);
     }
 
     /**
@@ -228,7 +266,7 @@ class DeezerApi
      */
     public function getOptions(): Options
     {
-        return Hydrator::hydrate($this->callApi("/options"), Options::class);
+        return Hydrator::hydrate(self::callApi("/options"), Options::class);
     }
 
     /**
@@ -236,7 +274,7 @@ class DeezerApi
      */
     public function getPlaylistById($id): Playlist
     {
-        return Hydrator::hydrate($this->callApi("/playlist/$id"), Playlist::class);
+        return Hydrator::hydrate(self::callApi("/playlist/$id"), Playlist::class);
     }
 
     /**
@@ -244,7 +282,7 @@ class DeezerApi
      */
     public function getPodcast(): array
     {
-        return Hydrator::hydrateArray($this->callApi("/podcast"), Podcast::class);
+        return Hydrator::hydrateArray(self::callApi("/podcast"), Podcast::class);
     }
 
     /**
@@ -252,7 +290,7 @@ class DeezerApi
      */
     public function getRadioById($id): Radio
     {
-        return Hydrator::hydrate($this->callApi("/radio/$id"), Radio::class);
+        return Hydrator::hydrate(self::callApi("/radio/$id"), Radio::class);
     }
 
     /**
@@ -260,7 +298,7 @@ class DeezerApi
      */
     public function getAllRadios(): array
     {
-        return Hydrator::hydrateArray($this->callApi("/radio"), Radio::class);
+        return Hydrator::hydrateArray(self::callApi("/radio"), Radio::class);
     }
 
     /**
@@ -268,7 +306,7 @@ class DeezerApi
      */
     public function search($query): array
     {
-        return Hydrator::hydrateArray($this->callApi("/search/$query"), Search::class);
+        return Hydrator::hydrateArray(self::callApi("/search/$query"), Search::class);
     }
 
     /**
@@ -276,7 +314,7 @@ class DeezerApi
      */
     public function getTrackById($id): Track
     {
-        return Hydrator::hydrate($this->callApi("/track/$id"), Track::class);
+        return Hydrator::hydrate(self::callApi("/track/$id"), Track::class);
     }
 
     /**
@@ -285,6 +323,6 @@ class DeezerApi
     public function getUser(): User
     {
         $this->needApiToken();
-        return Hydrator::hydrate($this->callApi("/user/me"), User::class);
+        return Hydrator::hydrate(self::callApi("/user/me"), User::class);
     }
 }
