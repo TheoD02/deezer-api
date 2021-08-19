@@ -17,6 +17,27 @@ class Radio
     private string $picture_xl;
     private string $tracklist;
     private string $md5_image;
+    private string $type;
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Radio
+     */
+    public function setType(string $type): Radio
+    {
+        $this->type = $type;
+        return $this;
+    }
+
 
     /**
      * @return int

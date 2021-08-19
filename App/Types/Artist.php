@@ -10,12 +10,15 @@ class Artist
     private string $share;
     private string $picture;
     private string $picture_small;
+    private string $picture_medium;
     private string $picture_big;
     private string $picture_xl;
     private int $nb_album;
     private int $nb_fan;
     private bool $radio;
     private string $tracklist;
+    private string $type;
+    private int $position;
 
     /**
      * @return int
@@ -134,6 +137,25 @@ class Artist
     /**
      * @return string
      */
+    public function getPictureMedium(): string
+    {
+        return $this->picture_medium;
+    }
+
+    /**
+     * @param string $picture_medium
+     *
+     * @return Artist
+     */
+    public function setPictureMedium(string $picture_medium): Artist
+    {
+        $this->picture_medium = $picture_medium;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getPictureBig(): string
     {
         return $this->picture_big;
@@ -242,6 +264,44 @@ class Artist
     public function setTracklist(string $tracklist): Artist
     {
         $this->tracklist = $tracklist;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Artist
+     */
+    public function setType(string $type): Artist
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int $position
+     *
+     * @return Artist
+     */
+    public function setPosition(int $position): Artist
+    {
+        $this->position = $position;
         return $this;
     }
 }

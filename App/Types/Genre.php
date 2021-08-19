@@ -13,6 +13,7 @@ class Genre
     private string $picture_medium;
     private string $picture_big;
     private string $picture_xl;
+    private string $type;
 
     /**
      * @return int
@@ -144,6 +145,25 @@ class Genre
     public function setPictureXl(string $picture_xl): Genre
     {
         $this->picture_xl = $picture_xl;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Genre
+     */
+    public function setType(string $type): Genre
+    {
+        $this->type = $type;
         return $this;
     }
 }

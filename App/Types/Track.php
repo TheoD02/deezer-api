@@ -5,6 +5,9 @@ namespace App\Types;
 
 
 use App\Hydrator;
+use App\Types\SubTypes\Contributor;
+use App\Types\SubTypes\ExplicitContentLyrics;
+use DateTime;
 
 class Track
 {
@@ -18,13 +21,14 @@ class Track
     private string $link;
     private string $share;
     private int $duration;
+    private int $position;
     private int $track_position;
-    private int $disc_number;
+    private int $disk_number;
     private int $rank;
     private string $release_date;
     private bool $explicit_lyrics;
-    private int $explicit_content_lyrics; // TODO
-    private int $explicit_content_cover; // TODO
+    private ?string $explicit_content_lyrics;
+    private ?string $explicit_content_cover;
     private string $preview;
     private float $bpm;
     private float $gain;
@@ -34,6 +38,47 @@ class Track
     private string $md5_image;
     private Artist $artist;
     private Album $album;
+    private string $type;
+    private DateTime $time_add;
+
+    /**
+     * @return DateTime
+     */
+    public function getTimeAdd(): DateTime
+    {
+        return $this->time_add;
+    }
+
+    /**
+     * @param int $time_add
+     *
+     * @return Track
+     */
+    public function setTimeAdd(int $time_add): Track
+    {
+        $this->time_add = (new DateTime())->setTimestamp($time_add);
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getTrackPosition(): int
+    {
+        return $this->track_position;
+    }
+
+    /**
+     * @param int $track_position
+     *
+     * @return Track
+     */
+    public function setTrackPosition(int $track_position): Track
+    {
+        $this->track_position = $track_position;
+        return $this;
+    }
 
     /**
      * @return int
@@ -228,38 +273,38 @@ class Track
     /**
      * @return int
      */
-    public function getTrackPosition(): int
+    public function getPosition(): int
     {
-        return $this->track_position;
+        return $this->position;
     }
 
     /**
-     * @param int $track_position
+     * @param int $position
      *
      * @return Track
      */
-    public function setTrackPosition(int $track_position): Track
+    public function setPosition(int $position): Track
     {
-        $this->track_position = $track_position;
+        $this->position = $position;
         return $this;
     }
 
     /**
      * @return int
      */
-    public function getDiscNumber(): int
+    public function getDiskNumber(): int
     {
-        return $this->disc_number;
+        return $this->disk_number;
     }
 
     /**
-     * @param int $disc_number
+     * @param int $disk_number
      *
      * @return Track
      */
-    public function setDiscNumber(int $disc_number): Track
+    public function setDiskNumber(int $disk_number): Track
     {
-        $this->disc_number = $disc_number;
+        $this->disk_number = $disk_number;
         return $this;
     }
 
@@ -321,9 +366,9 @@ class Track
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getExplicitContentLyrics(): int
+    public function getExplicitContentLyrics(): string
     {
         return $this->explicit_content_lyrics;
     }
@@ -335,7 +380,7 @@ class Track
      */
     public function setExplicitContentLyrics(int $explicit_content_lyrics): Track
     {
-        $this->explicit_content_lyrics = $explicit_content_lyrics;
+        $this->explicit_content_lyrics = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_lyrics);
         return $this;
     }
 
@@ -354,7 +399,7 @@ class Track
      */
     public function setExplicitContentCover(int $explicit_content_cover): Track
     {
-        $this->explicit_content_cover = $explicit_content_cover;
+        $this->explicit_content_cover = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_cover);
         return $this;
     }
 
@@ -468,7 +513,7 @@ class Track
      */
     public function setContributors(array $contributors): Track
     {
-        $this->contributors = $contributors;
+        $this->contributors = Hydrator::hydrateArray($contributors, Contributor::class);
         return $this;
     }
 
@@ -506,8 +551,7 @@ class Track
      */
     public function setArtist(array $artist): Track
     {
-        $artist = Hydrator::hydrate($artist, Artist::class);
-        $this->artist = $artist;
+        $this->artist = Hydrator::hydrate($artist, Artist::class);;
         return $this;
     }
 
@@ -526,8 +570,26 @@ class Track
      */
     public function setAlbum(array $album): Track
     {
-        $album = Hydrator::hydrate($album, Album::class);
-        $this->album = $album;
+        $this->album = Hydrator::hydrate($album, Album::class);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return Track
+     */
+    public function setType(string $type): Track
+    {
+        $this->type = $type;
         return $this;
     }
 }

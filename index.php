@@ -12,5 +12,5 @@ $deezerApi = new DeezerApi();
 /*$deezerApi->setPermissions(DeezerApi::ALL_ACCESS);
 echo $deezerApi->generateAuthentificationUrl();*/
 
-$artist = $deezerApi->getAlbumById(247809452);
+$artist = $deezerApi->getTrackById("?q=eminem");
 dd($artist);

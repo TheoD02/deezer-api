@@ -62,7 +62,7 @@ class DeezerApi
      */
     private function needApiToken()
     {
-        if ($this->isLogged) throw new \Exception('To access this function you need to have a API token');
+        if (!$this->isLogged) throw new \Exception('To access this function you need to have a API token');
         return $this->isLogged;
     }
 
@@ -169,9 +169,9 @@ class DeezerApi
     /**
      * @throws \JsonException
      */
-    public function getChartById($id): Chart
+    public function getChart(): Chart
     {
-        return Hydrator::hydrate($this->callApi("/chart/$id"), Chart::class);
+        return Hydrator::hydrate($this->callApi("/chart"), Chart::class);
     }
 
     /**
@@ -180,6 +180,15 @@ class DeezerApi
     public function getEditorialById($id): Editorial
     {
         return Hydrator::hydrate($this->callApi("/editorial/$id"), Editorial::class);
+    }
+
+    /**
+     * @return Editorial[]
+     * @throws \JsonException
+     */
+    public function getAllEditorial(): array
+    {
+        return Hydrator::hydrateArray($this->callApi('/editorial'), Editorial::class);
     }
 
     /**
@@ -201,6 +210,14 @@ class DeezerApi
     /**
      * @throws \JsonException
      */
+    public function getAllGenres(): array
+    {
+        return Hydrator::hydrateArray($this->callApi("/genre"), Genre::class);
+    }
+
+    /**
+     * @throws \JsonException
+     */
     public function getInfos(): Infos
     {
         return Hydrator::hydrate($this->callApi("/infos"), Infos::class);
@@ -217,7 +234,7 @@ class DeezerApi
     /**
      * @throws \JsonException
      */
-    public function getPlaylist($id): Playlist
+    public function getPlaylistById($id): Playlist
     {
         return Hydrator::hydrate($this->callApi("/playlist/$id"), Playlist::class);
     }
@@ -225,9 +242,9 @@ class DeezerApi
     /**
      * @throws \JsonException
      */
-    public function getPodcastById($id): Podcast
+    public function getPodcast(): array
     {
-        return Hydrator::hydrate($this->callApi("/podcast/$id"), Podcast::class);
+        return Hydrator::hydrateArray($this->callApi("/podcast"), Podcast::class);
     }
 
     /**
@@ -241,9 +258,17 @@ class DeezerApi
     /**
      * @throws \JsonException
      */
-    public function search($query): Search
+    public function getAllRadios(): array
     {
-        return Hydrator::hydrate($this->callApi("/search/$query"), Search::class);
+        return Hydrator::hydrateArray($this->callApi("/radio"), Radio::class);
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function search($query): array
+    {
+        return Hydrator::hydrateArray($this->callApi("/search/$query"), Search::class);
     }
 
     /**
@@ -257,8 +282,9 @@ class DeezerApi
     /**
      * @throws \JsonException
      */
-    public function getUserById($id): User
+    public function getUser(): User
     {
-        return Hydrator::hydrate($this->callApi("/user/$id"), User::class);
+        $this->needApiToken();
+        return Hydrator::hydrate($this->callApi("/user/me"), User::class);
     }
 }

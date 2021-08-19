@@ -6,473 +6,476 @@ namespace App\Types;
 
 use App\Hydrator;
 use App\Types\SubTypes\Contributor;
+use App\Types\SubTypes\ExplicitContentLyrics;
+use DateTime;
 
 class Album
 {
-    private int $id;
-    private string $title;
-    private string $upc;
-    private string $link;
-    private string $share;
-    private string $cover;
-    private string $cover_small;
-    private string $cover_medium;
-    private string $cover_big;
-    private string $cover_xl;
-    private string $md5_image;
-    private int $genre_id;
-    private array $genres;
-    private string $label;
-    private int $nb_trakcs;
-    private int $duration;
-    private int $fans;
-    private int $rating;
-    private ?\DateTime $release_date;
-    private string $record_type;
-    private bool $available;
-    private $alternative; // TODO : genre
-    private string $tracklist;
+    private ?int $id;
+    private ?string $title;
+    private ?string $upc;
+    private ?string $link;
+    private ?string $share;
+    private ?string $cover;
+    private ?string $cover_small;
+    private ?string $cover_medium;
+    private ?string $cover_big;
+    private ?string $cover_xl;
+    private ?string $md5_image;
+    private ?int $genre_id;
+    private ?array $genres;
+    private ?string $label;
+    private ?int $nb_tracks;
+    private ?int $duration;
+    private ?int $fans;
+    private ?int $rating;
+    private ?DateTime $release_date;
+    private ?string $record_type;
+    private ?bool $available;
+    private ?Genre $alternative;
+    private ?string $tracklist;
     private bool $explicit_lyrics;
-    private int $explicit_content_lyrics; // TODO : create object to handle number easily
-    private int $explicit_content_cover; // TODO : same as before
-    private array $contributors;
-    private Artist $artist;
+    private ?string $explicit_content_lyrics;
+    private ?string $explicit_content_cover;
+    private ?array $contributors;
+    private ?Artist $artist;
     /** @var Track[] list of tracks */
-    private array $tracks;
+    private ?array $tracks;
+    private ?string $type;
+    private ?int $position;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      *
      * @return Album
      */
-    public function setId(int $id): Album
+    public function setId(?int $id): Album
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
     /**
-     * @param string $title
+     * @param string|null $title
      *
      * @return Album
      */
-    public function setTitle(string $title): Album
+    public function setTitle(?string $title): Album
     {
         $this->title = $title;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUpc(): string
+    public function getUpc(): ?string
     {
         return $this->upc;
     }
 
     /**
-     * @param string $upc
+     * @param string|null $upc
      *
      * @return Album
      */
-    public function setUpc(string $upc): Album
+    public function setUpc(?string $upc): Album
     {
         $this->upc = $upc;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
 
     /**
-     * @param string $link
+     * @param string|null $link
      *
      * @return Album
      */
-    public function setLink(string $link): Album
+    public function setLink(?string $link): Album
     {
         $this->link = $link;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getShare(): string
+    public function getShare(): ?string
     {
         return $this->share;
     }
 
     /**
-     * @param string $share
+     * @param string|null $share
      *
      * @return Album
      */
-    public function setShare(string $share): Album
+    public function setShare(?string $share): Album
     {
         $this->share = $share;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCover(): string
+    public function getCover(): ?string
     {
         return $this->cover;
     }
 
     /**
-     * @param string $cover
+     * @param string|null $cover
      *
      * @return Album
      */
-    public function setCover(string $cover): Album
+    public function setCover(?string $cover): Album
     {
         $this->cover = $cover;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCoverSmall(): string
+    public function getCoverSmall(): ?string
     {
         return $this->cover_small;
     }
 
     /**
-     * @param string $cover_small
+     * @param string|null $cover_small
      *
      * @return Album
      */
-    public function setCoverSmall(string $cover_small): Album
+    public function setCoverSmall(?string $cover_small): Album
     {
         $this->cover_small = $cover_small;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCoverMedium(): string
+    public function getCoverMedium(): ?string
     {
         return $this->cover_medium;
     }
 
     /**
-     * @param string $cover_medium
+     * @param string|null $cover_medium
      *
      * @return Album
      */
-    public function setCoverMedium(string $cover_medium): Album
+    public function setCoverMedium(?string $cover_medium): Album
     {
         $this->cover_medium = $cover_medium;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCoverBig(): string
+    public function getCoverBig(): ?string
     {
         return $this->cover_big;
     }
 
     /**
-     * @param string $cover_big
+     * @param string|null $cover_big
      *
      * @return Album
      */
-    public function setCoverBig(string $cover_big): Album
+    public function setCoverBig(?string $cover_big): Album
     {
         $this->cover_big = $cover_big;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCoverXl(): string
+    public function getCoverXl(): ?string
     {
         return $this->cover_xl;
     }
 
     /**
-     * @param string $cover_xl
+     * @param string|null $cover_xl
      *
      * @return Album
      */
-    public function setCoverXl(string $cover_xl): Album
+    public function setCoverXl(?string $cover_xl): Album
     {
         $this->cover_xl = $cover_xl;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMd5Image(): string
+    public function getMd5Image(): ?string
     {
         return $this->md5_image;
     }
 
     /**
-     * @param string $md5_image
+     * @param string|null $md5_image
      *
      * @return Album
      */
-    public function setMd5Image(string $md5_image): Album
+    public function setMd5Image(?string $md5_image): Album
     {
         $this->md5_image = $md5_image;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getGenreId(): int
+    public function getGenreId(): ?int
     {
         return $this->genre_id;
     }
 
     /**
-     * @param int $genre_id
+     * @param int|null $genre_id
      *
      * @return Album
      */
-    public function setGenreId(int $genre_id): Album
+    public function setGenreId(?int $genre_id): Album
     {
         $this->genre_id = $genre_id;
         return $this;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getGenres(): array
+    public function getGenres(): ?array
     {
         return $this->genres;
     }
 
     /**
-     * @param array $genres
+     * @param array|null $genres
      *
      * @return Album
      */
-    public function setGenres(array $genres): Album
+    public function setGenres(?array $genres): Album
     {
         $this->genres = Hydrator::hydrateArray($genres, Genre::class);
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
 
     /**
-     * @param string $label
+     * @param string|null $label
      *
      * @return Album
      */
-    public function setLabel(string $label): Album
+    public function setLabel(?string $label): Album
     {
         $this->label = $label;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getNbTrakcs(): int
+    public function getNbTracks(): ?int
     {
-        return $this->nb_trakcs;
+        return $this->nb_tracks;
     }
 
     /**
-     * @param int $nb_trakcs
+     * @param int|null $nb_tracks
      *
      * @return Album
      */
-    public function setNbTrakcs(int $nb_trakcs): Album
+    public function setNbTracks(?int $nb_tracks): Album
     {
-        $this->nb_trakcs = $nb_trakcs;
+        $this->nb_tracks = $nb_tracks;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getDuration(): int
+    public function getDuration(): ?int
     {
         return $this->duration;
     }
 
     /**
-     * @param int $duration
+     * @param int|null $duration
      *
      * @return Album
      */
-    public function setDuration(int $duration): Album
+    public function setDuration(?int $duration): Album
     {
         $this->duration = $duration;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getFans(): int
+    public function getFans(): ?int
     {
         return $this->fans;
     }
 
     /**
-     * @param int $fans
+     * @param int|null $fans
      *
      * @return Album
      */
-    public function setFans(int $fans): Album
+    public function setFans(?int $fans): Album
     {
         $this->fans = $fans;
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getRating(): int
+    public function getRating(): ?int
     {
         return $this->rating;
     }
 
     /**
-     * @param int $rating
+     * @param int|null $rating
      *
      * @return Album
      */
-    public function setRating(int $rating): Album
+    public function setRating(?int $rating): Album
     {
         $this->rating = $rating;
         return $this;
     }
 
     /**
-     * @return ?\DateTime
+     * @return DateTime|null
      */
-    public function getReleaseDate(): ?\DateTime
+    public function getReleaseDate(): ?DateTime
     {
         return $this->release_date;
     }
 
     /**
-     * @param string $release_date
+     * @param string|null $release_date
      *
      * @return Album
-     * @throws \Exception
      */
     public function setReleaseDate(string $release_date): Album
     {
-        $this->release_date = new \DateTime($release_date);
+        $this->release_date = new DateTime($release_date);
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getRecordType(): string
+    public function getRecordType(): ?string
     {
         return $this->record_type;
     }
 
     /**
-     * @param string $record_type
+     * @param string|null $record_type
      *
      * @return Album
      */
-    public function setRecordType(string $record_type): Album
+    public function setRecordType(?string $record_type): Album
     {
         $this->record_type = $record_type;
         return $this;
     }
 
     /**
-     * @return bool
+     * @return bool|null
      */
-    public function isAvailable(): bool
+    public function getAvailable(): ?bool
     {
         return $this->available;
     }
 
     /**
-     * @param bool $available
+     * @param bool|null $available
      *
      * @return Album
      */
-    public function setAvailable(bool $available): Album
+    public function setAvailable(?bool $available): Album
     {
         $this->available = $available;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return Genre|null
      */
-    public function getAlternative()
+    public function getAlternative(): ?Genre
     {
         return $this->alternative;
     }
 
     /**
-     * @param mixed $alternative
+     * @param Genre|null $alternative
      *
      * @return Album
      */
-    public function setAlternative($alternative)
+    public function setAlternative(?Genre $alternative): Album
     {
         $this->alternative = $alternative;
         return $this;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTracklist(): string
+    public function getTracklist(): ?string
     {
         return $this->tracklist;
     }
 
     /**
-     * @param string $tracklist
+     * @param string|null $tracklist
      *
      * @return Album
      */
-    public function setTracklist(string $tracklist): Album
+    public function setTracklist(?string $tracklist): Album
     {
         $this->tracklist = $tracklist;
         return $this;
@@ -498,72 +501,72 @@ class Album
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getExplicitContentLyrics(): int
+    public function getExplicitContentLyrics(): ?int
     {
         return $this->explicit_content_lyrics;
     }
 
     /**
-     * @param int $explicit_content_lyrics
+     * @param int|null $explicit_content_lyrics
      *
      * @return Album
      */
-    public function setExplicitContentLyrics(int $explicit_content_lyrics): Album
+    public function setExplicitContentLyrics(?int $explicit_content_lyrics): Album
     {
-        $this->explicit_content_lyrics = $explicit_content_lyrics;
+        $this->explicit_content_lyrics = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_lyrics);
         return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getExplicitContentCover(): int
+    public function getExplicitContentCover(): ?int
     {
         return $this->explicit_content_cover;
     }
 
     /**
-     * @param int $explicit_content_cover
+     * @param int|null $explicit_content_cover
      *
      * @return Album
      */
-    public function setExplicitContentCover(int $explicit_content_cover): Album
+    public function setExplicitContentCover(?int $explicit_content_cover): Album
     {
-        $this->explicit_content_cover = $explicit_content_cover;
+        $this->explicit_content_cover = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_cover);
         return $this;
     }
 
     /**
-     * @return array
+     * @return array|null
      */
-    public function getContributors(): array
+    public function getContributors(): ?array
     {
         return $this->contributors;
     }
 
     /**
-     * @param array $contributors
+     * @param array|null $contributors
      *
      * @return Album
      */
-    public function setContributors(array $contributors): Album
+    public function setContributors(?array $contributors): Album
     {
         $this->contributors = Hydrator::hydrateArray($contributors, Contributor::class);
         return $this;
     }
 
     /**
-     * @return Artist
+     * @return Artist|null
      */
-    public function getArtist(): Artist
+    public function getArtist(): ?Artist
     {
         return $this->artist;
     }
 
     /**
-     * @param array $artist
+     * @param array|null $artist
      *
      * @return Album
      */
@@ -576,7 +579,7 @@ class Album
     /**
      * @return Track[]
      */
-    public function getTracks(): array
+    public function getTracks(): ?array
     {
         return $this->tracks;
     }
@@ -586,9 +589,47 @@ class Album
      *
      * @return Album
      */
-    public function setTracks(array $tracks): Album
+    public function setTracks(?array $tracks): Album
     {
         $this->tracks = Hydrator::hydrateArray($tracks, Track::class);
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     *
+     * @return Album
+     */
+    public function setType(?string $type): Album
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    /**
+     * @param int|null $position
+     *
+     * @return Album
+     */
+    public function setPosition(?int $position): Album
+    {
+        $this->position = $position;
         return $this;
     }
 }
