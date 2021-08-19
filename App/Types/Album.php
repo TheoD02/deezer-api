@@ -7,6 +7,7 @@ namespace App\Types;
 use App\Hydrator;
 use App\Types\SubTypes\Contributor;
 use App\Types\SubTypes\ExplicitContentLyrics;
+use DateTime;
 
 class Album
 {
@@ -28,14 +29,14 @@ class Album
     private ?int $duration;
     private ?int $fans;
     private ?int $rating;
-    private ?\DateTime $release_date;
+    private ?DateTime $release_date;
     private ?string $record_type;
     private ?bool $available;
-    private ?Genre $alternative; // TODO : genre
+    private ?Genre $alternative;
     private ?string $tracklist;
     private bool $explicit_lyrics;
-    private ?string $explicit_content_lyrics; // TODO : create object to handle number easily
-    private ?string $explicit_content_cover; // TODO : same as before
+    private ?string $explicit_content_lyrics;
+    private ?string $explicit_content_cover;
     private ?array $contributors;
     private ?Artist $artist;
     /** @var Track[] list of tracks */
@@ -386,9 +387,9 @@ class Album
     }
 
     /**
-     * @return \DateTime|null
+     * @return DateTime|null
      */
-    public function getReleaseDate(): ?\DateTime
+    public function getReleaseDate(): ?DateTime
     {
         return $this->release_date;
     }
@@ -400,7 +401,7 @@ class Album
      */
     public function setReleaseDate(string $release_date): Album
     {
-        $this->release_date = new \DateTime($release_date);
+        $this->release_date = new DateTime($release_date);
         return $this;
     }
 

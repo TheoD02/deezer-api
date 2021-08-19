@@ -6,6 +6,8 @@ namespace App\Types;
 
 use App\Hydrator;
 use App\Types\SubTypes\Contributor;
+use App\Types\SubTypes\ExplicitContentLyrics;
+use DateTime;
 
 class Track
 {
@@ -25,8 +27,8 @@ class Track
     private int $rank;
     private string $release_date;
     private bool $explicit_lyrics;
-    private int $explicit_content_lyrics; // TODO
-    private int $explicit_content_cover; // TODO
+    private ?string $explicit_content_lyrics;
+    private ?string $explicit_content_cover;
     private string $preview;
     private float $bpm;
     private float $gain;
@@ -37,12 +39,12 @@ class Track
     private Artist $artist;
     private Album $album;
     private string $type;
-    private \DateTime $time_add;
+    private DateTime $time_add;
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getTimeAdd(): \DateTime
+    public function getTimeAdd(): DateTime
     {
         return $this->time_add;
     }
@@ -54,7 +56,7 @@ class Track
      */
     public function setTimeAdd(int $time_add): Track
     {
-        $this->time_add = (new \DateTime())->setTimestamp($time_add);
+        $this->time_add = (new DateTime())->setTimestamp($time_add);
         return $this;
     }
 
@@ -364,9 +366,9 @@ class Track
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getExplicitContentLyrics(): int
+    public function getExplicitContentLyrics(): string
     {
         return $this->explicit_content_lyrics;
     }
@@ -378,7 +380,7 @@ class Track
      */
     public function setExplicitContentLyrics(int $explicit_content_lyrics): Track
     {
-        $this->explicit_content_lyrics = $explicit_content_lyrics;
+        $this->explicit_content_lyrics = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_lyrics);
         return $this;
     }
 
@@ -397,7 +399,7 @@ class Track
      */
     public function setExplicitContentCover(int $explicit_content_cover): Track
     {
-        $this->explicit_content_cover = $explicit_content_cover;
+        $this->explicit_content_cover = (new ExplicitContentLyrics())->getExplicitInfo($explicit_content_cover);
         return $this;
     }
 
@@ -549,8 +551,7 @@ class Track
      */
     public function setArtist(array $artist): Track
     {
-        $artist       = Hydrator::hydrate($artist, Artist::class);
-        $this->artist = $artist;
+        $this->artist = Hydrator::hydrate($artist, Artist::class);;
         return $this;
     }
 
@@ -569,8 +570,7 @@ class Track
      */
     public function setAlbum(array $album): Track
     {
-        $album       = Hydrator::hydrate($album, Album::class);
-        $this->album = $album;
+        $this->album = Hydrator::hydrate($album, Album::class);
         return $this;
     }
 

@@ -6,6 +6,7 @@ namespace App\Types;
 
 use App\Hydrator;
 use App\Types\SubTypes\Creator;
+use DateTime;
 
 class Playlist
 {
@@ -32,16 +33,16 @@ class Playlist
     private User $user;
     /** @var Track[] */
     private array $tracks;
-    private string $creation_date;
+    private DateTime $creation_date;
     private string $md5_image;
     private string $picture_type;
     private string $type;
     private Creator $creator;
 
     /**
-     * @return array
+     * @return Creator
      */
-    public function getCreator(): array
+    public function getCreator(): Creator
     {
         return $this->creator;
     }
@@ -116,9 +117,9 @@ class Playlist
     }
 
     /**
-     * @return string
+     * @return DateTime
      */
-    public function getCreationDate(): string
+    public function getCreationDate(): DateTime
     {
         return $this->creation_date;
     }
@@ -127,10 +128,11 @@ class Playlist
      * @param string $creation_date
      *
      * @return Playlist
+     * @throws \Exception
      */
     public function setCreationDate(string $creation_date): Playlist
     {
-        $this->creation_date = $creation_date;
+        $this->creation_date = new DateTime($creation_date);
         return $this;
     }
 

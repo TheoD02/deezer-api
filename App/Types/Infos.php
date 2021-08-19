@@ -63,9 +63,9 @@ class Infos
 
 
     /**
-     * @return array
+     * @return Host
      */
-    public function getHosts(): array
+    public function getHosts(): Host
     {
         return $this->hosts;
     }

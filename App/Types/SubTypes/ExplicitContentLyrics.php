@@ -22,7 +22,7 @@ class ExplicitContentLyrics
 
     }
 
-    public function getExplicitInfo(?int $explicit_content_lyrics)
+    public function getExplicitInfo(?int $explicit_content_lyrics): ?string
     {
         return self::EXPLICIT_CASES[$explicit_content_lyrics] ?? null;
     }
